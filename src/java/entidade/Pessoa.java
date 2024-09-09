@@ -14,6 +14,12 @@ public class Pessoa {
     private String email;
     private String telefone;
     private String dataNascimento;
+    
+    public Pessoa () {
+        nome = "";
+        email = "";
+        telefone = "";
+    }
 
     public int getId() {
         return id;

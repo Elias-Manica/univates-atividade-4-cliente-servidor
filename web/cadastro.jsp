@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dao.PessoaDAO"%>
+<%@page import="entidade.Pessoa"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -64,24 +66,35 @@
         </style>
     </head>
     <%@include file="menu.jsp" %>
+    <%
+        Pessoa p = (Pessoa) request.getAttribute("pessoa");
+
+        if (p == null) {
+            p = new Pessoa();
+        }
+    %>
+
     <body>
         <div class="container">
             <h1>Cadastro de Pessoa</h1>
-            <form action="/action?a=salvarPessoa" method="post">
-                <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required>
+                <form action="action?a=salvarPessoa" method="post">
+                    
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required value="<%= p.getNome() %>"><br>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Digite o email" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Digite o email" required value="<%= p.getEmail() %>"><br>
 
-                <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="Digite o telefone">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="Digite o telefone" value="<%= p.getTelefone() %>"><br>
 
-                <label for="data_nascimento">Data de Nascimento:</label>
-                <input type="date" id="data_nascimento" name="data_nascimento">
+                    <label for="data_nascimento">Data de Nascimento:</label>
+                    <input type="date" id="data_nascimento" name="data_nascimento" value="<%= p.getDataNascimento() %>"><br>
 
-                <input type="submit" value="Cadastrar">
-            </form>
+                    <br><br>
+                    <input type="text" id="id" name="id" readonly="" style="display: none" value="<%= p.getId() %>"><br>
+                    <input type="submit" value="<%= p.getId() == 0 ? "Cadastrar" : "Atualizar" %>">
+                </form>
         </div>
     </body>
 </html>

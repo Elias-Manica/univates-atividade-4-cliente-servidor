@@ -60,7 +60,29 @@ public class action extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String a = request.getParameter("a");
+
+        if (a.equals("editarPessoa")) {
+            String id = request.getParameter("id");
+            int codigo = Integer.parseInt(id);
+
+            Pessoa pessoa = new PessoaDAO().consultar(codigo);
+            request.setAttribute("pessoa", pessoa);
+
+            encaminharPagina("cadastro.jsp", request, response);
+        }
+
+        if (a.equals("excluirPessoa")) {
+            String id = request.getParameter("id");
+            int codigo = Integer.parseInt(id);
+
+            if (new PessoaDAO().excluir(codigo)) {
+                encaminharPagina("cadastro-tabela.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+        }
     }
 
     /**
@@ -78,22 +100,49 @@ public class action extends HttpServlet {
         String a = request.getParameter("a");
 
         if (a.equals("salvarPessoa")) {
+            String codigo = request.getParameter("id");
             String nome = request.getParameter("nome");
             String email = request.getParameter("email");
             String telefone = request.getParameter("telefone");
             String dataNascimento = request.getParameter("data_nascimento");
 
             Pessoa pessoa = new Pessoa();
+            // Verifica se o código não é nulo e não está vazio antes de tentar converter
+            if (codigo != null && !codigo.isEmpty()) {
+                int id = Integer.parseInt(codigo);
+                pessoa.setId(id);
+            } else {
+                // Se o código for nulo ou vazio, estamos criando uma nova pessoa
+                pessoa.setId(0);
+            }
             pessoa.setNome(nome);
             pessoa.setEmail(email);
             pessoa.setTelefone(telefone);
             pessoa.setDataNascimento(dataNascimento);
+            
+            
+            String errorMessage =  new PessoaDAO().validarDados(pessoa);
 
-            if (new PessoaDAO().salvar(pessoa)) {
-                encaminharPagina("sucesso.jsp", request, response);
+            if (errorMessage == null) {
+                if (pessoa.getId() == 0) { // Nova Pessoa
+                    if (new PessoaDAO().salvar(pessoa)) {
+                        encaminharPagina("sucesso.jsp", request, response);
+                    } else {
+                        encaminharPagina("erro.jsp", request, response);
+                    }
+                } else { // Atualizando Pessoa
+                    if (new PessoaDAO().atualizar(pessoa)) {
+                        encaminharPagina("sucesso.jsp", request, response);
+                    } else {
+                        encaminharPagina("erro.jsp", request, response);
+                    }
+                }
             } else {
+                request.setAttribute("erroMensagem", errorMessage);
                 encaminharPagina("erro.jsp", request, response);
             }
+
+            
         }
     }
 
