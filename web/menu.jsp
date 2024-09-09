@@ -47,10 +47,10 @@
     <body>
 
         <ul>
-            <li><a href="index.jsp">Home</a></li>
+            <li><a href="home.jsp">Home</a></li>
             <li><a href="cadastro.jsp">Cadastro Pessoal</a></li>
             <li><a href="cadastro-tabela.jsp">Listar cadastros</a></li>
-            <li><a href="logout.jsp">Sair (Deslogar)</a></li>
+            <li><a href="index.jsp">Sair (Deslogar)</a></li>
         </ul>
 
     </body>

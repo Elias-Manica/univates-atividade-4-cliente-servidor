@@ -47,7 +47,7 @@
         <div class="container">
             <h1>Ocorreu um Erro</h1>
             <p><%= request.getAttribute("erroMensagem") != null ? request.getAttribute("erroMensagem") : "Infelizmente, não foi possível concluir a operação." %></p>
-            <p><a href="index.jsp">Voltar à página inicial</a></p>
+            <p><a href="home.jsp">Voltar à página inicial</a></p>
         </div>
     </body>
 </html>

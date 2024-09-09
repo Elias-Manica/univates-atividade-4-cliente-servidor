@@ -47,7 +47,7 @@
         <div class="container">
             <h1>Operação Concluída com Sucesso</h1>
             <p>Os dados foram salvos com sucesso!</p>
-            <p><a href="index.jsp">Voltar à página inicial</a></p>
+            <p><a href="home.jsp">Voltar à página inicial</a></p>
         </div>
     </body>
 </html>

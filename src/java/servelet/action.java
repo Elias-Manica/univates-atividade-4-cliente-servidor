@@ -5,6 +5,7 @@
 package servelet;
 
 import dao.PessoaDAO;
+import dao.UsuarioDAO;
 import entidade.Pessoa;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -61,6 +63,7 @@ public class action extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+ 
         String a = request.getParameter("a");
 
         if (a.equals("editarPessoa")) {
